@@ -9,16 +9,8 @@ export class AppComponent {
   title = 'proyecto001';
   nombre = 'Rodiguez Pablo';
   edad = 40;
-  email = 'rpablo@gmail.com';
   sueldos = [1700, 1600, 1900];
-  activo = true;
 
-  esActivo(){
-    if(this.activo)
-      return 'Trabajador activo';
-    else
-      return 'Trabajador Inactivo';
-  }
 
   ultimos3Sueldos(){
     let suma = 0;
