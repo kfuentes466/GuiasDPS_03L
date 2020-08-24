@@ -10,6 +10,7 @@ export class AppComponent {
   nombre = 'Rodiguez Pablo';
   edad = 40;
   sueldos = [1700, 1600, 1900];
+  contador = 0;
 
 
   ultimos3Sueldos(){
@@ -18,5 +19,13 @@ export class AppComponent {
       suma += this.sueldos[x];
     
     return suma;
+  }
+
+  incrementar(){
+    this.contador++;
+  }
+
+  decrementar(){
+    this.contador--;
   }
 }
