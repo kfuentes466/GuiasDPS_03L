@@ -1,0 +1,49 @@
+
+
+    <div class="card-body">
+      <h3 class="card-title">DATOS DE EMPLEADO</h3>
+      <p class="card-text">Ingrese información del empleado</p>
+      <div class="alert alert-secondary" role="alert" [hidden]="error==0">
+       ¡Ingrese correctamente los campos!
+      </div>
+   
+        <div class="form-group">
+          <label for="exampleInputEmail1">Nombre:</label>
+          <input type="text" class="form-control"  [(ngModel)]="nombre" required>
+        
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Sueldo:</label>
+          <input type="number" class="form-control" [(ngModel)]="salario" min=0 required>
+        </div>
+      
+        <button type="submit" class="btn btn-danger" (click)="ingresar()">Calcular</button>   
+   </div>
+
+
+    
+    <table class="table" style="width:90%; margin:auto;" [hidden]="contador==0">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Nombre Completo</th>
+          <th scope="col">Salario</th>
+          <th scope="col">ISSS</th>
+          <th scope="col">AFP</th>
+          <th scope="col">Renta</th>
+          <th scope="col">Salario-descuentos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let templeado of registro">
+          <td>{{templeado.nombre}}</td>
+          <td>{{templeado.salario}}</td>
+          <td>{{templeado.isss}}</td>
+          <td>{{templeado.afp}}</td>
+          <td>{{templeado.renta}}</td>
+          <td>{{templeado.recibir}}</td>
+        </tr>
+        
+      </tbody>
+    </table>
+    
+    
