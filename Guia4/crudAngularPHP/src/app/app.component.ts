@@ -12,9 +12,6 @@ export class AppComponent {
 
   model: any = {};
 
-  onSubmit(){
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.model, null, 4));
-  }
 
   articulos =null;
 
@@ -57,13 +54,17 @@ export class AppComponent {
   }
 
   modificacion(){
-    this.articulosServicio.modificacion(this.art).subscribe(datos => {
-      if(datos['resultado'] == 'OK'){
-        alert(datos['mensaje']);
-        this.recuperarTodos(); 
-        this.art = { codigo:0,descripcion:null,precio:null,proveedor:null,fabricante:null};
-      }
-    })
+    if(this.art.descripcion != '' && this.art.fabricante != '' && this.art.proveedor != '' && this.art.precio != 0 && this.art.precio != '' && this.art.precio != ''){
+        this.articulosServicio.modificacion(this.art).subscribe(datos => {
+          if(datos['resultado'] == 'OK'){
+            alert(datos['mensaje']);
+            this.recuperarTodos(); 
+            this.art = { codigo:0,descripcion:null,precio:null,proveedor:null,fabricante:null};
+          }
+        });
+    }else if(this.art.precio == 0){
+      alert("El precio del producto no puede ser 0!")
+    }
   }
 
   seleccionar(codigo){

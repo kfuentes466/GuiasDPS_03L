@@ -6,8 +6,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ArticulosService {
 
-  //url = 'https://guiasdpsfr170484.000webhostapp.com/guia4/php/';
-  url = 'http://localhost:80/guia4/';
+  url = 'https://guiasdpsfr170484.000webhostapp.com/guia4/php/';
+  //url = 'http://localhost:80/guia4/';
   constructor(private http: HttpClient) { }
 
   recuperarTodos(){

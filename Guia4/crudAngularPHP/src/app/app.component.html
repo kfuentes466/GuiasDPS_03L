@@ -34,7 +34,7 @@
             <p>No hay articulos.</p> 
           </ng-template> 
           <div> 
-            <form #agregarForm="ngForm" novalidate >
+            <form #agregarForm="ngForm" (ngSubmit)="agregarForm.form.valid" novalidate >
             <div class="form-group"> 
               <input type="text" [(ngModel)]="art.descripcion" placeholder="descripcion" class="form-control" #descripcion="ngModel" 
                [ngClass]="{ 'is-invalid':agregarForm.submitted && descripcion.invalid}" name="descripcion" required/> 
