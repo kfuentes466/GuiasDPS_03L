@@ -18,25 +18,65 @@
             - {{alumno.name}}
             - {{alumno.lastname}}
             - {{alumno.age}}
+            - {{alumno.direccion}}
+            - {{alumno.telefono}}
+            - {{alumno.email}}
         </li>
       </ul>
       <div class="card">
+        <form #agregarForm="ngForm" (ngSubmit)="agregarForm.form.valid" novalidate>
         <div class="card-body">
           <div class="card-title">
             <h3>{{selectedAlumno.id == 0 ? "Agregar Nuevo Alumno" : "Actualizar Alumno"}}</h3>
           </div>
           <div class="form-group">
-            <input type="text" [(ngModel)]="selectedAlumno.name" placeholder="name"class="form-control">
+            <input type="text" [(ngModel)]="selectedAlumno.name" placeholder="name"class="form-control" name="nombre" #nombre="ngModel"
+             [ngClass]="{'is-invalid': agregarForm.submitted && nombre.invalid}" required>
+             <div *ngIf="agregarForm.submitted && nombre.invalid" class="invalid-feedback">
+              <div *ngIf="nombre.errors.required">El nombre es requerido !</div>
+            </div>
           </div>
           <div class="form-group">
-            <input type="text" [(ngModel)]="selectedAlumno.lastname" placeholder="lastname"class="form-control">
+            <input type="text" [(ngModel)]="selectedAlumno.lastname" placeholder="lastname"class="form-control" name="apellido" #apellido="ngModel"
+             [ngClass]="{'is-invalid': agregarForm.submitted && apellido.invalid}" required>
+             <div *ngIf="agregarForm.submitted && apellido.invalid" class="invalid-feedback">
+              <div *ngIf="apellido.errors.required">El apellido del alumno es requerido !</div>
+            </div>
           </div>
           <div class="form-group">
-            <input type="number" [(ngModel)]="selectedAlumno.age" placeholder="age"class="form-control">
+            <input type="number" [(ngModel)]="selectedAlumno.age" placeholder="Age"class="form-control" name="age" #age="ngModel" 
+             [ngClass]="{'is-invalid':agregarForm.submitted && age.invalid}" required >
+             <div *ngIf="agregarForm.submitted && age.invalid" class="invalid-feedback">
+              <div *ngIf="age.errors.required">Edad es requerido !</div>
+            </div>
+          </div>  
+          <div class="form-group">
+            <input type="text" [(ngModel)]="selectedAlumno.direccion" placeholder="Address"class="form-control" name="address" #address="ngModel" 
+             [ngClass]="{'is-invalid': address.invalid && agregarForm.submitted}" required>
+             <div *ngIf="agregarForm.submitted && address.invalid" class="invalid-feedback">
+              <div *ngIf="address.errors.required">La direccion es requerida !</div>
           </div>
+          </div>
+          <div class="form-group">
+            <input type="text" [(ngModel)]="selectedAlumno.telefono" placeholder="Telephone"class="form-control" name="telefono" #telefono="ngModel"
+             [ngClass]="{'is-invalid': agregarForm.submitted && telefono.invalid}" pattern="^[0-9]{4}-[0-9]{4}$" required>
+             <div *ngIf="agregarForm.submitted && telefono.invalid" class="invalid-feedback">
+              <div *ngIf="telefono.errors.required">El número de telefono es requerido !</div>
+              <div *ngIf="telefono.errors.pattern">Numero invalido! !</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="text" [(ngModel)]="selectedAlumno.email" placeholder="Email"class="form-control" name="email" #email="ngModel" 
+             [ngClass]="{'is-invalid':agregarForm.submitted && email.invalid}" required email >
+             <div *ngIf="agregarForm.submitted && email.invalid" class="invalid-feedback">
+              <div *ngIf="email.errors.required">Email es requerido !</div>
+              <div *ngIf="email.errors.email">Email no valido...</div>
+          </div>
+          </div>
+
           <button (click)="addOrEddit()" class="btn btn-primary btn-space">Guardar</button>
           <button *ngIf="selectedAlumno.id !== 0" class="btn btn-danger" (click)="delete()">Eliminar</button>
-        </div>
+        </div></form>
       </div>
     </div>
     <div class="col-md-4">
