@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import empleadosForm from "./empleadosForm";
-
+//import empleadosForm from "./empleadosForm";
+import EmpleadosForm from "./EmpleadosForm";
 import { db } from "../Firebase";
 import { toast } from "react-toastify";
 
@@ -14,14 +14,14 @@ const Empleados = () =>{
             querySnapshot.forEach((doc) => {
                 docs.push({ ...doc.data(), id:doc.id});
             });
-            getEmpleados(docs);
+            setEmpleados(docs);
         });
     };
 
     const eliminarEmpleado = async (id) => {
         if (window.confirm("Esta seguro de que desea eliminar a este empleado?")){
             await db.collection("Empleados").doc(id).delete();
-            toast("De elimino un trabajador", {
+            toast("Se elimino el trabajador", {
                 type:"error",
             });
         }
@@ -31,7 +31,7 @@ const Empleados = () =>{
         getEmpleados();
     }, []);
 
-    insertaroeliminarEmpleado = async (EmpleadoObject) => {
+   const insertaroeliminarEmpleado = async (EmpleadoObject) => {
         try{
             if (currentId === ""){
                 await db.collection("Empleados").doc().set(EmpleadoObject);
@@ -43,7 +43,7 @@ const Empleados = () =>{
                 toast("Se actualizo un empleado", {
                     type: "info",
                 });
-                setCurrentId();
+                setCurrentId("");
             }
         }catch(error){
             console.log(console.error());
@@ -51,8 +51,43 @@ const Empleados = () =>{
     };
 
     return (
+        <>
         <div className="col-md-4 p-2">
             <h2>Agregar Empleados</h2>
+            <EmpleadosForm {...{ insertaroeliminarEmpleado, currentId, Empleados }}/>
         </div>
-    )
-}
+
+        <div className="col-md-8 p-2">
+            <div className="container">
+                <h2>Lista de empleados</h2>
+                <table className="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Cargo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {Empleados.map((Empleado) => (
+                            <tr key={Empleado.id}>
+                                <td>{Empleado.nombre}</td>
+                                <td>{Empleado.apellido}</td>
+                                <td>{Empleado.cargo}</td>
+                                <td>
+                                <button className="btn btn-primary" onClick={() => setCurrentId(Empleado.id)}>Editar</button>
+                    &nbsp;
+                    &nbsp;
+                    <button className="btn btn-danger" onClick={() => eliminarEmpleado(Empleado.id)}>Eliminar</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </>
+    );
+};
+export default Empleados;
